@@ -1,10 +1,12 @@
-## 第3章　コンポーネント設計のアイデア
+## Chabot試した ~CW小ネタ~
 
 ---
 
 1. CSSにおけるコンポーネント設計
 2. OOCSS
 3. BEM
+
+![Alt Text](http://25.media.tumblr.com/tumblr_md70mb4IYE1qifr2mo4_1280.jpg)
 
 ---
 
