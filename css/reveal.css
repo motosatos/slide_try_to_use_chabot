@@ -1029,7 +1029,7 @@ body {
   width: 600px;
   margin: 0 auto;
   padding: 60px;
-  text-align: center;
+  text-align: left;
   letter-spacing: normal; }
 
 .reveal .overlay.overlay-help .viewport .viewport-inner .title {
