@@ -1,127 +1,135 @@
-## Chabot試した ~ChatWork小ネタ~
+## Chabot試した
+### ~ChatWork小ネタ~
 
 ---
 
+## 事情
++ ExplorienceでG2ヘルプ
++ G1エンジニアは[Slack](https://slack.com/)でコミュニケーション
+ - Slack上でGitlabのpush通知を受け取ってMergeRequestの処理を行ったり
++ G2メンバにも通知したい。。。
+ - 通知ないと、いちいち席立って声掛けする
+ - 通知があってもスルーすることはあるけど、、、まぁそれはさ、、、
+ - Slackにゲストで参加させるのはChannelにつき1人である
 
+### とりまChatWorkに通知できるといいなぁ
+
+--
+
+### ってことで,Chabotを試す
++ Chabotってなにさ
+ - ggrks
+ - ChatWork と Webhook を提供しているサービスとを連携させるアプリケーションです。
+ - Gitlab - Chabot - ChatWork のような連携
+
+--
+
+### やりたいことの流れ
+1. エンジニア   が GitlabにMR
+2. Gitlab       が Webhook使って, Chatbotアプリ(Herokuに載せる)に通知
+3. Chabotアプリ が ChatWork APIを叩いて、ChatWorkにPost
+4. エンジニア   は 通知を見てレビュ 
 
 ---
 
-### 3-1 CSSにおけるコンポーネント設計 
-
---
-
-+ コンポーネントとは
- - 部品だ。目的は部品化することで機能や振る舞いなどを明確に分離する
-
---
-
-+ カプセル化
- - コンポーネントの構造やデータを隠し、外部からは許可された操作のみを受付、また内部の仕様変更が外部に影響しないようにするといったこと 
-  - 分離が成立
-  - メンテアップ、再利用性アップ
- - しかし、、
-
-<section data-background="http://25.media.tumblr.com/tumblr_md70mb4IYE1qifr2mo4_1280.jpg">
-</section>
-
-<img src="" alt="サンプル" width="300" height="200">
-
---
-
-+ CSSにはカプセル化の概念がない
- - 容易に他への影響が出る
-+ コンポーネント設計が難しいCSSだが、アイデアがある
- - OOCSS 
+### [デモ](http://dev1.hyakuren.org:18080/training2013/mvp2)
 
 ---
 
-### 3-2. OOCSS(Object Oriented CSS)
+### 導入準備
+* Heroku
+ - Chabot(Gitlab-ChatWorkを実現する)アプリを動かしておく
+* ChatWork
+ - Chabotを使うにあたり、ChatWorkのAPI叩く必要あり 
+ - APIを使用するには、申請が必要
+ - 三口さんにネゴる
+* Gitlab
+ - Webhookの設定, どこに対して通知するのか
+ - 設定にはmaster権限が必要
+ - 理解を求めて、@yshiga(百錬Gitlabの構築者), @kimura, @iizuka(お二人も管理者相当の権限はお持ち)さんあたりにネゴる
+
+#### ここまで書いて, まず準備する敷居がメンドイことがわかったｗ
 
 --
 
-+ OOCSSの原則
- - 構造と見た目の分離
- - コンテナーとコンテンツを分離
+### Heroku
+アプリをpushするだけ、割愛
 
 --
 
-#### 構造と見た目の分離
-
-コンポーネントの基本構造と具体的なルール機能を分離するということ 
-
---
-
-#### 番外 IDセレクタはよくない
-
-+ id *属性* はいいんだぞ！
- - ページ内リンクの識別子
- - JSのフック 
+### ChatWork
+* API申請が通ったらtokenが発行されるので控える
+* 通知したいroom_idを控える(#!rid12345678の12345678部)
 
 --
 
-#### コンテナーとコンテンツを分離
+### Chabotアプリ作成
 
-場所に依存しないセレクタを書く
-
----
-
-### 今回、リソース不足により触れないが、SMACSSも重要
-### 一応、簡単な棲み分け
-
-#### OOCSS - 考え方/アイデア
-#### SMACSS - コーディングルール
-#### BEM - ツールであり、命名規則
-
----
-
-### 3-3. BEM
-
---
-
-#### .Block__Element_Modifier
-
-オブジェクト/コンポーネントを3つに分類して命名する
-
---
-
-+ マークアップを見れば、クラスの機能/構造がつかめる
-+ ユニークさが保たれるので、スタイルが汚染されない(他に影響しない)
-
---
-
-#### MindBEMding
-
-BEM的な命名規則のこと
-要は厳格すぎるので、方針はブレずにローカルルール取り入れてもよいよという話
-
-+ BEMの命名規則のエッセンスを取り入れつつ、命名そのものは開発社の方で定義せい
-+ 重要なのは、その定義したルールが全体を通して一貫していること
-
---
-
-お約束で、Element(アンスコ*2 __), Modifier(ハイフン*2 --)というルール
++ [基本的にREADME通りつくる](https://github.com/zaru/chabot/blob/master/README.md)
 
 ```html
-block
-block__element
-block__element--modifier
-block--modifier
-block--modifier__element
+~/work/a$ chabot create test
+  copying files.
+  completed!
+   > /Users/motosato/work/a/test
+~/work/a$ ll
+total 0
+drwxr-xr-x  3 motosato  staff   102B  4  8 13:50 ./
+drwxr-xr-x  8 motosato  staff   272B  4  8 13:50 ../
+drwxr-xr-x  8 motosato  staff   272B  4  8 13:50 test/
+~/work/a$ cd test/
+~/work/a/test$ ll
+total 24
+drwxr-xr-x  8 motosato  staff   272B  4  8 13:50 ./
+drwxr-xr-x  3 motosato  staff   102B  4  8 13:50 ../
+-rw-r--r--  1 motosato  staff   290B  4  8 13:50 app.js
+drwxr-xr-x  3 motosato  staff   102B  4  8 13:50 bots/
+-rw-r--r--  1 motosato  staff   189B  4  8 13:50 config.json
+drwxr-xr-x  3 motosato  staff   102B  4  8 13:50 node_modules/
+-rw-r--r--  1 motosato  staff   229B  4  8 13:50 package.json
+drwxr-xr-x  3 motosato  staff   102B  4  8 13:50 templates/
+~
 ```
 
 --
 
-htmlで、
+#### config.json書き換え
+
 ```html
-<div class="block">
-    <div class="block__element"></div>
-    <div class="block__element block__element--modifier"></div>
-</div>
-<div class="block block--modifier">
-    <div class="block__element block--modifier__element"></div>
-</div>
+{
+    "port": 5000,
+    "bots": {
++        "gitlab": {
++            "hostname": "herokuに載せてるappのurl",
++            "token": "CWのtoken",
++            "route": "/gitlab/hooks/:roomid"
+        }
+    }
+}
 ```
 
 --
 
-ハイフンひとつは、以上のこと以外の用途(ex.複数単語の区切り)
+#### アプリを動かす
+
++ `Procfile` つくって、`nodeで走らせる`
+
+```html
+web: node app.js
+```
+
+--
+
+### Gitlabの設定
+
++ [プロジェクトの設定画面](http://dev1.hyakuren.org:18080/training2013/mvp2/hooks)でWebhookを登録
++ herokuアプリのurl/gitlab/hooks/通知したいroom_id
+ - TriggerはMerge Requests events
+
+---
+
+### 以上でとりまChatWork通知はできる
+
+### 問題点(というか時間ない)
++ assineeが返ってこないので誰にレビュ依頼してるかわからん
++ stateが `opened` しか返ってこない
