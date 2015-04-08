@@ -1,12 +1,8 @@
-## Chabot試した ~CW小ネタ~
+## Chabot試した ~ChatWork小ネタ~
 
 ---
 
-1. CSSにおけるコンポーネント設計
-2. OOCSS
-3. BEM
 
-![Alt Text](http://25.media.tumblr.com/tumblr_md70mb4IYE1qifr2mo4_1280.jpg)
 
 ---
 
@@ -24,6 +20,11 @@
   - 分離が成立
   - メンテアップ、再利用性アップ
  - しかし、、
+
+<section data-background="http://25.media.tumblr.com/tumblr_md70mb4IYE1qifr2mo4_1280.jpg">
+</section>
+
+<img src="" alt="サンプル" width="300" height="200">
 
 --
 
