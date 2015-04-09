@@ -104,7 +104,7 @@
 			mouseWheel: false,
 
 			// Apply a 3D roll to links on hover
-			rollingLinks: false,
+			rollingLinks: true,
 
 			// Hides the address bar on mobile devices
 			hideAddressBar: true,
